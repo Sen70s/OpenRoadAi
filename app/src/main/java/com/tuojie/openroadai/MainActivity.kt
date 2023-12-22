@@ -7,8 +7,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
@@ -26,6 +26,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -33,23 +38,27 @@ import androidx.navigation.compose.rememberNavController
 import com.tuojie.openroadai.ui.screens.AiDialogue.AiDialogueView
 import com.tuojie.openroadai.ui.screens.Discover.TopBarDiscover
 import com.tuojie.openroadai.ui.screens.Discover.ViewPrintDiscover
-import com.tuojie.openroadai.ui.screens.Myself.TopBarMyself
-import com.tuojie.openroadai.ui.screens.Myself.ViewPrintMyself
 import com.tuojie.openroadai.ui.screens.Home.TopBarHome
 import com.tuojie.openroadai.ui.screens.Home.ViewPrintHome
+import com.tuojie.openroadai.ui.screens.Login.LoginView
+import com.tuojie.openroadai.ui.screens.Myself.TopBarMyself
+import com.tuojie.openroadai.ui.screens.Myself.ViewPrintMyself
 import com.tuojie.openroadai.ui.screens.PostPosts.PostView
 import com.tuojie.openroadai.ui.theme.OpenRoadAiTheme
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
+        WindowCompat.setDecorFitsSystemWindows(window, true)
         super.onCreate(savedInstanceState)
+
         val res = super.getResources()
 
         if (res != null) {
             val config = res.configuration
             config.fontScale = 1.0f
         }
+
         setContent{
             OpenRoadAiTheme{
                 PagesController()
@@ -65,6 +74,7 @@ fun PagesController (){
         composable("home") { AppNavBar(navController) }
         composable("postView"){PostView(navController)}
         composable("AiDialogueView"){AiDialogueView(navController)}
+        composable("Login"){LoginView(navController)}
     }
 }
 
@@ -72,6 +82,7 @@ fun PagesController (){
 fun AppNavBar(navController: NavController) {
     var selectedItem by remember { mutableIntStateOf(0) }
     Scaffold(
+
         bottomBar = {
             BottomAppBar(
                 actions = {
@@ -100,26 +111,29 @@ fun AppNavBar(navController: NavController) {
                         containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
                         elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
                     ) {
-                        Icon(Icons.Filled.Add, "Localized description")
+                        Icon(painterResource(id = R.mipmap.icon_logo),"AiLogo",tint = Color.Unspecified, modifier = Modifier.width(32.dp))
                     }
                 }
             )
         },
-        topBar = { GetAppTopBar( selectedItem, navController) }
+        topBar = {
+            GetAppTopBar( selectedItem, navController)
+        }
         ) {
             innerPadding ->
-        when(selectedItem) {
-            0 -> { ViewPrintHome(innerPadding) }
-            1 -> { ViewPrintDiscover(innerPadding,navController) }
-            2 -> { ViewPrintMyself(innerPadding) }
-            else -> { ViewPrintHome(innerPadding) }
-    }
+            when(selectedItem) {
+                0 -> { ViewPrintHome(innerPadding) }
+                1 -> { ViewPrintDiscover(innerPadding,navController) }
+                2 -> { ViewPrintMyself(innerPadding) }
+                else -> { ViewPrintHome(innerPadding) }
+            }
     }
 }
 
+
 @Composable
-fun GetAppTopBar(IndexNum : Int, navController: NavController) {
-    when(IndexNum){
+fun GetAppTopBar(indexNum : Int, navController: NavController) {
+    when(indexNum){
         0 -> { TopBarHome() }
         1 -> { TopBarDiscover(navController) }
         2 -> { TopBarMyself() }
