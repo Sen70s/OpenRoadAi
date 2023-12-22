@@ -78,9 +78,6 @@ fun ViewPrintDiscover( innerPadding: PaddingValues, navController: NavController
         item{
             PostCard()
         }
-        item{
-            PostCard()
-        }
     }
 }
 
@@ -133,6 +130,7 @@ fun TopBarDiscover(navController: NavController) {
 }
 
 /*Version0.1 MD3*/
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HotSpotsView(){
     Column {
@@ -141,11 +139,6 @@ fun HotSpotsView(){
                 enabled = true,
                 onClick = { },
                 label = { Text("热门话题") }
-            )
-            SuggestionChip(
-                modifier = Modifier.padding(start = 10.dp),
-                onClick = { },
-                label = { Text("查看更多 >") }
             )
         }
         LazyRow(
@@ -163,15 +156,15 @@ fun HotSpotsView(){
                     }
                     Column {
                         ListItem(
-                            headlineText = { Text("每日一练") },
-                            supportingText = { Text("999人参与") },
+                            headlineText = { Text("每周一练") },
+                            supportingText = { Text("99人参与") },
                             leadingContent = { Icon( imageVector = Icons.Filled.Star, contentDescription = "信息" ) }
                         )
                     }
                     Column {
                         ListItem(
-                            headlineText = { Text("每日一练") },
-                            supportingText = { Text("999人参与") },
+                            headlineText = { Text("每月一练") },
+                            supportingText = { Text("1329人参与") },
                             leadingContent = { Icon( imageVector = Icons.Filled.Star, contentDescription = "信息" ) }
                         )
                     }
@@ -182,22 +175,22 @@ fun HotSpotsView(){
                 ) {
                     Column {
                         ListItem(
-                            headlineText = { Text("每日一练") },
-                            supportingText = { Text("999人参与") },
+                            headlineText = { Text("考研路上") },
+                            supportingText = { Text("1099人参与") },
                             leadingContent = { Icon( imageVector = Icons.Filled.Star, contentDescription = "信息" ) }
                         )
                     }
                     Column {
                         ListItem(
-                            headlineText = { Text("每日一练") },
-                            supportingText = { Text("999人参与") },
+                            headlineText = { Text("专升本") },
+                            supportingText = { Text("2349人参与") },
                             leadingContent = { Icon( imageVector = Icons.Filled.Star, contentDescription = "信息" ) }
                         )
                     }
                     Column {
                         ListItem(
-                            headlineText = { Text("每日一练") },
-                            supportingText = { Text("999人参与") },
+                            headlineText = { Text("四六级") },
+                            supportingText = { Text("1832人参与") },
                             leadingContent = { Icon( imageVector = Icons.Filled.Star, contentDescription = "信息" ) }
                         )
                     }
@@ -226,7 +219,7 @@ fun PostCard(){
                     Modifier
                         .size(52.dp)
                         .clip(CircleShape)
-                        .background(Color(0xff3491FA))
+                        .background(Color.Gray)
                 )
                 Column (verticalArrangement = Arrangement.Center){
                     Text(text = "HerSen", fontWeight = FontWeight.Bold)
@@ -254,7 +247,6 @@ fun PostCard(){
                         painterResource(R.mipmap.icon_logo),"LOGO",
                         Modifier
                             .fillMaxSize()
-                            .background(Color(0xff3491FA))
                     )
                 }
                 item {
@@ -262,7 +254,6 @@ fun PostCard(){
                         painterResource(R.mipmap.iamge_success),"LOGO",
                         Modifier
                             .fillMaxSize()
-                            .background(Color(0xff3491FA))
                     )
                 }
                 item {
@@ -270,7 +261,6 @@ fun PostCard(){
                         painterResource(R.mipmap.icon_logo),"LOGO",
                         Modifier
                             .fillMaxSize()
-                            .background(Color(0xff3491FA))
                     )
                 }
             }
@@ -278,7 +268,7 @@ fun PostCard(){
             /*中部内容 - 文本 and 话题标签*/
             Column {
                 Text(
-                    "启麓 - 启明你的一生之路.启麓 - 启明你的一生之路.启麓 - 启明你的一生之路.启麓 - 启明你的一生之路.启麓 - 启明你的一生之路.启麓 - 启明你的一生之路.启麓 - 启明你的一生之路.",
+                    "今天是拓界·启麓的开发日志第五天啦！现在已经开发了很多的界面和功能啦，等待后续的公测和大家相见吧！",
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis
                 )

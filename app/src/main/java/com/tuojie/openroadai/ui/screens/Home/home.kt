@@ -3,7 +3,6 @@
 package com.tuojie.openroadai.ui.screens.Home
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -37,59 +36,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.tuojie.openroadai.R
 
-/*
-@Composable
-fun SearchBar(){
-    Row(
-        Modifier
-            .padding(24.dp, 2.dp, 24.dp, 6.dp)
-            .fillMaxWidth()
-            .height(64.dp)
-            .clip(RoundedCornerShape(20.dp))
-            .border(2.dp, Color.Gray, RoundedCornerShape(20.dp))
-            .background(Color.Gray)
-            .padding(1.dp)
-            .background(Color.White),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        var searchText by remember { mutableStateOf("") }
-        BasicTextField(
-            searchText,
-            { searchText = it },
-            Modifier.padding(start = 24.dp).weight(1f),
-            textStyle = TextStyle(fontSize = 24.sp)
-        )
-        {
-            if(searchText.isEmpty()){
-                Text(text = "Input Something?",color= Color(0xffb4b4b4), fontSize = 24.sp)
-            }
-            it()
-        }
-        Box(
-            Modifier
-                .padding(6.dp)
-                .fillMaxHeight()
-                .aspectRatio(1f)
-                .clip(CircleShape)
-                //.background(Color(0xfffa9e51))
-                .clickable( onClick = { Log.d("Clickable", " clicked.") })
-            ){
-            Icon(
-                painterResource(R.drawable.icon_camera), "搜索",
-                modifier = Modifier.size(24.dp).align(Alignment.Center),
-                tint = Color.Gray
-            )
-        }
-    }
-}
-*/
 
 /* Version:0.2 MD3 */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -105,7 +56,7 @@ fun TaskView(){
             SuggestionChip(
                 enabled = true,
                 onClick = { },
-                label = { Text("2023/12/02") },
+                label = { Text("2023/12/13") },
                 modifier = Modifier.padding(start = 5.dp)
             )
         }
@@ -122,14 +73,13 @@ fun TaskView(){
                 ListItem(
                     overlineText = { Text("课程") },
                     headlineText = { Text("高等数学C") },
-                    supportingText = { Text("8:45-11:45 | B507 | 范老师") },
+                    supportingText = { Text("8:45-11:45 | B507 | 李老师") },
                     leadingContent = {
                         Image(
                             painterResource(R.mipmap.icon_logo),"LOGO",
                             Modifier
                                 .size(64.dp)
                                 .clip(RoundedCornerShape(20.dp))
-                                .background(Color(0xff3491FA))
                         )
                     },
                     trailingContent = { Text("重要") }
@@ -144,7 +94,6 @@ fun TaskView(){
                             Modifier
                                 .size(64.dp)
                                 .clip(RoundedCornerShape(20.dp))
-                                .background(Color(0xff3491FA))
                         )
                     },
                     trailingContent = { Text("重要") }
@@ -159,7 +108,6 @@ fun TaskView(){
                             Modifier
                                 .size(64.dp)
                                 .clip(RoundedCornerShape(20.dp))
-                                .background(Color(0xff3491FA))
                         )
                                      },
                     trailingContent = { Text("次重要") }
@@ -198,12 +146,13 @@ fun FunctionView(){
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBarHome() {
     TopAppBar(
         title = {
             Text(
-                "启麓 - 启明你的一生之路.",
+                "启麓",
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )

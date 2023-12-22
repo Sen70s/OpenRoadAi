@@ -16,14 +16,26 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.EmojiPeople
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.DateRange
+import androidx.compose.material.icons.outlined.LocalActivity
+import androidx.compose.material.icons.outlined.Message
+import androidx.compose.material.icons.outlined.Tsunami
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ElevatedButton
@@ -199,7 +211,7 @@ fun MoreFunctionView(){
             ListItem(
                 headlineText = { Text("对话记录") },
                 leadingContent = {
-                    Icon( imageVector = Icons.Filled.Phone, contentDescription = "FunctionName", Modifier.size(32.dp) )
+                    Icon( imageVector = Icons.Outlined.Message, contentDescription = "FunctionName", Modifier.size(32.dp) )
                 },
                 trailingContent = {
                     Icon( imageVector = Icons.Filled.KeyboardArrowRight, contentDescription = "GoTo", Modifier.size(32.dp) )
@@ -208,7 +220,7 @@ fun MoreFunctionView(){
             ListItem(
                 headlineText = { Text("小鹿建议") },
                 leadingContent = {
-                    Icon( imageVector = Icons.Filled.Phone, contentDescription = "FunctionName", Modifier.size(32.dp) )
+                    Icon( imageVector = Icons.Outlined.Check, contentDescription = "FunctionName", Modifier.size(32.dp) )
                 },
                 trailingContent = {
                     Icon( imageVector = Icons.Filled.KeyboardArrowRight, contentDescription = "GoTo", Modifier.size(32.dp) )
@@ -217,7 +229,7 @@ fun MoreFunctionView(){
             ListItem(
                 headlineText = { Text("小鹿日程") },
                 leadingContent = {
-                    Icon( imageVector = Icons.Filled.Phone, contentDescription = "FunctionName", Modifier.size(32.dp) )
+                    Icon( imageVector = Icons.Outlined.DateRange, contentDescription = "FunctionName", Modifier.size(32.dp) )
                 },
                 trailingContent = {
                     Icon( imageVector = Icons.Filled.KeyboardArrowRight, contentDescription = "GoTo", Modifier.size(32.dp) )
@@ -226,7 +238,7 @@ fun MoreFunctionView(){
             ListItem(
                 headlineText = { Text("个人信息") },
                 leadingContent = {
-                    Icon( imageVector = Icons.Filled.Phone, contentDescription = "FunctionName", Modifier.size(32.dp) )
+                    Icon( imageVector = Icons.Outlined.AccountCircle, contentDescription = "FunctionName", Modifier.size(32.dp) )
                 },
                 trailingContent = {
                     Icon( imageVector = Icons.Filled.KeyboardArrowRight, contentDescription = "GoTo", Modifier.size(32.dp) )
@@ -235,7 +247,7 @@ fun MoreFunctionView(){
             ListItem(
                 headlineText = { Text("热门活动") },
                 leadingContent = {
-                    Icon( imageVector = Icons.Filled.Phone, contentDescription = "FunctionName", Modifier.size(32.dp) )
+                    Icon( imageVector = Icons.Outlined.LocalActivity, contentDescription = "FunctionName", Modifier.size(32.dp) )
                 },
                 trailingContent = {
                     Icon( imageVector = Icons.Filled.KeyboardArrowRight, contentDescription = "GoTo", Modifier.size(32.dp) )
@@ -244,7 +256,7 @@ fun MoreFunctionView(){
             ListItem(
                 headlineText = { Text("新手教程") },
                 leadingContent = {
-                    Icon( imageVector = Icons.Filled.Phone, contentDescription = "FunctionName", Modifier.size(32.dp) )
+                    Icon( imageVector = Icons.Filled.EmojiPeople, contentDescription = "FunctionName", Modifier.size(32.dp) )
                 },
                 trailingContent = {
                     Icon( imageVector = Icons.Filled.KeyboardArrowRight, contentDescription = "GoTo", Modifier.size(32.dp) )
