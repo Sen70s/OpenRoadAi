@@ -44,6 +44,7 @@ import com.tuojie.openroadai.ui.screens.Login.LoginView
 import com.tuojie.openroadai.ui.screens.Myself.TopBarMyself
 import com.tuojie.openroadai.ui.screens.Myself.ViewPrintMyself
 import com.tuojie.openroadai.ui.screens.PostPosts.PostView
+import com.tuojie.openroadai.ui.screens.Task.TaskEditView
 import com.tuojie.openroadai.ui.theme.OpenRoadAiTheme
 
 class MainActivity : ComponentActivity() {
@@ -75,9 +76,11 @@ fun PagesController (){
         composable("postView"){PostView(navController)}
         composable("AiDialogueView"){AiDialogueView(navController)}
         composable("Login"){LoginView(navController)}
+        composable("TaskEdit"){TaskEditView(navController)}
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppNavBar(navController: NavController) {
     var selectedItem by remember { mutableIntStateOf(0) }
@@ -122,10 +125,10 @@ fun AppNavBar(navController: NavController) {
         ) {
             innerPadding ->
             when(selectedItem) {
-                0 -> { ViewPrintHome(innerPadding) }
+                0 -> { ViewPrintHome(innerPadding,navController) }
                 1 -> { ViewPrintDiscover(innerPadding,navController) }
                 2 -> { ViewPrintMyself(innerPadding) }
-                else -> { ViewPrintHome(innerPadding) }
+                else -> { /*ViewPrintHome(innerPadding,navController) */}
             }
     }
 }
