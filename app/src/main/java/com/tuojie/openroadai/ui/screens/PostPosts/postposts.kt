@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedAssistChip
 import androidx.compose.material3.ElevatedButton
@@ -75,7 +76,7 @@ fun PostView(navController: NavController) {
                     }
                 },
                 actions = {
-                    ElevatedButton(onClick = {  })
+                    Button(onClick = {  })
                     {
                         Icon(Icons.Filled.Send, "More")
                         Text(text = "发 布")
