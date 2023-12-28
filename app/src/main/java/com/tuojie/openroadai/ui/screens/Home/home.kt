@@ -3,6 +3,7 @@
 package com.tuojie.openroadai.ui.screens.Home
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -112,7 +113,7 @@ fun TopBarHome() {
 
     TopAppBar(
         title = {
-            Crossfade(targetState = ExpandState, label = "") { isChange ->
+            Crossfade(targetState = ExpandState,animationSpec = tween(1500), label = "") { isChange ->
                 when(isChange.value){
                     true -> ExpandedSearchView()
                     false -> Text(text = "启麓")
@@ -121,7 +122,7 @@ fun TopBarHome() {
         },
         actions = {
             IconButton(onClick = { ExpandState.value = !ExpandState.value }) {
-                Crossfade(targetState = ExpandState, label = "") { isChange ->
+                Crossfade(targetState = ExpandState,animationSpec = tween(2000),label = "") { isChange ->
                     when(isChange.value){
                         false -> Icon(Icons.Default.Search,"Search")
                         true -> Icon(Icons.Default.Close,"Close")

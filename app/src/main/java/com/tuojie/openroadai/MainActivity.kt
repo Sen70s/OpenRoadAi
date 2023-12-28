@@ -36,7 +36,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.tuojie.openroadai.ui.screens.AiDialogue.AiDialogueView
-import com.tuojie.openroadai.ui.screens.Discover.TopBarDiscover
 import com.tuojie.openroadai.ui.screens.Discover.ViewPrintDiscover
 import com.tuojie.openroadai.ui.screens.Home.TopBarHome
 import com.tuojie.openroadai.ui.screens.Home.ViewPrintHome
@@ -139,7 +138,7 @@ fun AppNavBar(navController: NavController) {
 fun GetAppTopBar(indexNum : Int, navController: NavController) {
     when(indexNum){
         0 -> { TopBarHome() }
-        1 -> { TopBarDiscover(navController) }
+        /*1 -> { TopBarDiscover(navController) }*/
         2 -> { TopBarMyself() }
     }
 }
