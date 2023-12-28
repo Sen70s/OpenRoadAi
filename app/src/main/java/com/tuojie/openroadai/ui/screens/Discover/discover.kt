@@ -8,6 +8,7 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -22,32 +23,44 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Cabin
+import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.material.icons.filled.Whatshot
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedAssistChip
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -58,18 +71,13 @@ import com.tuojie.openroadai.R
 
 @Composable
 fun ViewPrintDiscover( innerPadding: PaddingValues, navController: NavController) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(20.dp),
-        contentPadding = innerPadding,
-        verticalArrangement = Arrangement.spacedBy(15.dp)
-    ) {
-        item{
-            HotSpotsView()
-        }
-        item{
-            PostCard()
+    var selectedItemNum: Int = 0
+    Box(Modifier.padding(innerPadding)){
+        Row (
+            Modifier.padding(top = 10.dp)
+        ){
+            selectedItemNum = DiscoverRailBar()
+            DiscoverContent(selectedItemNum)
         }
     }
 }
@@ -195,7 +203,9 @@ fun PostCard(){
         Column(Modifier.padding(10.dp)) {
             /*顶部 发帖人信息*/
             Row (
-                Modifier.fillMaxWidth().padding(start = 5.dp, end = 5.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(start = 5.dp, end = 5.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ){
@@ -292,3 +302,97 @@ fun PostCard(){
 }
 
 
+/*--------------------------------New---------------------------------*/
+
+@Composable
+fun DiscoverRailBar(): Int{
+    var selectedItem by remember { mutableIntStateOf(0) }
+    val items = listOf("热 点", "社 区", "搜 索")
+    val icons = listOf(Icons.Filled.Whatshot, Icons.Filled.Cabin, Icons.Filled.Search)
+    NavigationRail{
+        NavigationRailItem(
+            icon = { Icon(Icons.Default.Chat, "Msg") },
+            label = { Text("信 息") },
+            selected = selectedItem == 0,
+            onClick = { selectedItem = 0 }
+        )
+        Divider(
+            Modifier
+                .width(35.dp)
+                .padding(bottom = 5.dp),2.dp)
+        items.forEachIndexed { index, item ->
+            NavigationRailItem(
+                icon = { Icon(icons[index], contentDescription = item) },
+                label = { Text(item) },
+                selected = selectedItem == index + 1,
+                onClick = { selectedItem = index + 1 }
+            )
+        }
+    }
+    return selectedItem
+}
+
+@Composable
+fun DiscoverContent(changePages: Int = 0){
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    var isVisible by remember { mutableStateOf(true) }
+    Scaffold(
+        Modifier
+            .fillMaxSize()
+            .shadow(3.dp, RoundedCornerShape(topStart = 10.dp))
+            .background(
+                MaterialTheme.colorScheme.onPrimary,
+                RoundedCornerShape(topStart = 10.dp)
+            ),
+        topBar = {
+            TopAppBar(
+                title = {
+                    when(changePages){
+                        0 -> Text("信 息", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        1 -> Text("热 点", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        2 -> Text("社 区", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        3 -> Text("搜 索", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        else -> Text("信 息", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    }
+                },
+                scrollBehavior = scrollBehavior
+            )
+
+        }
+    ) { innerPadding ->
+        LazyColumn(
+            contentPadding = innerPadding,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            item {
+                when(changePages){
+                    0-> MsgPages()
+                    1 -> HotTagPages()
+                    2 -> CommunityPages()
+                    3 -> SearchPages()
+                    else -> MsgPages()
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun MsgPages(){
+    Text("信 息", maxLines = 1, overflow = TextOverflow.Ellipsis)
+}
+
+@Composable
+fun HotTagPages(){
+    Text("热 点", maxLines = 1, overflow = TextOverflow.Ellipsis)
+}
+
+@Composable
+fun CommunityPages(){
+    Text("社 区", maxLines = 1, overflow = TextOverflow.Ellipsis)
+}
+
+@Composable
+fun SearchPages(){
+    Text("搜 索", maxLines = 1, overflow = TextOverflow.Ellipsis)
+}
