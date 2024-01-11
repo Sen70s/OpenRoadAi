@@ -2,7 +2,6 @@
 
 package com.tuojie.openroadai.ui.screens.Myself
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,83 +13,39 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Create
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.EmojiPeople
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.LocalActivity
 import androidx.compose.material.icons.outlined.Message
-import androidx.compose.material.icons.outlined.Tsunami
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.tuojie.openroadai.R
+import coil.compose.AsyncImage
 
 /*Version0.1 MD3*/
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarMyself() {
-    CenterAlignedTopAppBar(
-        title = {
-            Text(
-                "我的",
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        },
-        actions = {
-            IconButton(onClick = { /* do something */ }) {
-                Icon(
-                    imageVector = Icons.Filled.Settings,
-                    contentDescription = "信息"
-                )
-            }
-        }
-    )
-
-}
-
-@Composable
-fun ViewPrintMyself( innerPadding: PaddingValues) {
+fun MineScreen(innerPadding: PaddingValues) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -113,6 +68,28 @@ fun ViewPrintMyself( innerPadding: PaddingValues) {
     }
 }
 
+
+@Composable
+fun MineScreenTopBar(){
+    TopAppBar(
+        title = {
+            Text(
+                "我的",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        actions = {
+            IconButton(onClick = { /* do something */ }) {
+                Icon(
+                    imageVector = Icons.Filled.Settings,
+                    contentDescription = "信息"
+                )
+            }
+        }
+    )
+}
+
 /*Version0.1 MD3*/
 @Composable
 fun UserInfoView(){
@@ -121,12 +98,12 @@ fun UserInfoView(){
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ){
-        Image(
-            painterResource(R.mipmap.icon_logo),"头像",
+        AsyncImage(
+            "http://q2.qlogo.cn/headimg_dl?dst_uin=2985222366&spec=100", "Avatar",
             Modifier
                 .size(52.dp)
                 .clip(CircleShape)
-                .background(Color(0xff3491FA))
+                .background(Color.Transparent)
         )
         Column (verticalArrangement = Arrangement.Center, modifier = Modifier.padding(start = 10.dp)){
             Text(text = "HerSen", fontWeight = FontWeight.Bold)

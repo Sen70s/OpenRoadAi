@@ -3,7 +3,7 @@
 package com.tuojie.openroadai.ui.screens.Home
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.Image
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -42,7 +42,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -53,13 +52,14 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.tuojie.openroadai.R
 import com.tuojie.openroadai.ui.screens.Task.TaskInformation
+import com.tuojie.openroadai.viewmodel.HomeScreenViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExpandedSearchView(
 ) {
@@ -101,19 +101,36 @@ fun ExpandedSearchView(
     }
 }
 
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarHome() {
+fun HomeScreen(innerPadding: PaddingValues, onNavigateToTaskEdit: () -> Unit = {}) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(20.dp),
+        contentPadding = innerPadding,
+        verticalArrangement = Arrangement.spacedBy(15.dp)
+    ) {
+        item {
+            FunctionView()
+        }
+        item {
+            TaskView(onNavigateToTaskEdit)
+        }
+    }
+}
+
+@Composable
+fun HomeScreenTopBar(){
     val ExpandState = remember { mutableStateOf(false) }
-
-
     val isShowMeuns = remember { mutableStateOf(false) }
-
     TopAppBar(
         title = {
-            Crossfade(targetState = ExpandState, label = "") { isChange ->
-                when(isChange.value){
+            Crossfade(
+                targetState = ExpandState,
+                animationSpec = tween(1500),
+                label = ""
+            ) { isChange ->
+                when (isChange.value) {
                     true -> ExpandedSearchView()
                     false -> Text(text = "启麓")
                 }
@@ -121,15 +138,19 @@ fun TopBarHome() {
         },
         actions = {
             IconButton(onClick = { ExpandState.value = !ExpandState.value }) {
-                Crossfade(targetState = ExpandState, label = "") { isChange ->
-                    when(isChange.value){
-                        false -> Icon(Icons.Default.Search,"Search")
-                        true -> Icon(Icons.Default.Close,"Close")
+                Crossfade(
+                    targetState = ExpandState,
+                    animationSpec = tween(2000),
+                    label = ""
+                ) { isChange ->
+                    when (isChange.value) {
+                        false -> Icon(Icons.Default.Search, "Search")
+                        true -> Icon(Icons.Default.Close, "Close")
                     }
                 }
             }
             IconButton(onClick = { isShowMeuns.value = !isShowMeuns.value }) {
-                Icon(Icons.Default.MoreVert,"More")
+                Icon(Icons.Default.MoreVert, "More")
             }
             Box(
                 modifier = Modifier
@@ -152,7 +173,7 @@ fun TopBarHome() {
                     )
                     DropdownMenuItem(
                         text = { Text("Settings") },
-                        onClick = {  },
+                        onClick = { },
                         leadingIcon = {
                             Icon(
                                 Icons.Outlined.Settings,
@@ -163,13 +184,12 @@ fun TopBarHome() {
                 }
             }
         }
-
     )
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun FunctionView(){
+fun FunctionView(vm: HomeScreenViewModel = viewModel()) {
     Column {
         SuggestionChip(
             enabled = true,
@@ -179,49 +199,32 @@ fun FunctionView(){
         FlowRow(
             Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ){
-            Column (
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
-                Button( onClick = {  }, ) { Icon(Icons.Filled.AddCircle, "训练计划") }
-                Text(text = "训练计划", style = MaterialTheme.typography.bodyMedium)
+        ) {
+            vm.AIDeerSkill.forEachIndexed { index, item ->
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Button(onClick = { vm.updataAIDeerSkillIndex(index) }) {
+                        Icon(
+                            item.icons,
+                            item.title
+                        )
+                    }
+                    Text(item.title, style = MaterialTheme.typography.bodyMedium)
+                }
             }
-            Column (
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
-                Button( onClick = {  }, ) { Icon(Icons.Filled.Create, "AI智写") }
-                Text(text = "AI智写", style = MaterialTheme.typography.bodyMedium)
-            }
-            Column (
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
-                Button( onClick = {  }, ) { Icon(Icons.Filled.PlayArrow, "AI翻译") }
-                Text(text = "AI翻译", style = MaterialTheme.typography.bodyMedium)
-            }
-            Column (
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
-                Button( onClick = {  }, ) { Icon(Icons.Filled.Menu, "More") }
-                Text(text = "更多技能", style = MaterialTheme.typography.bodyMedium)
-            }
-
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TaskView(navController: NavController){
-    val isShow = remember { mutableIntStateOf(0) }
-
-    Column (
+fun TaskView(onNavigateToTaskEdit: () -> Unit = {}, vm: HomeScreenViewModel = viewModel()) {
+    var isShow by remember { mutableStateOf(0) }
+    Column(
         verticalArrangement = Arrangement.spacedBy(5.dp)
-    ){
-        Row(horizontalArrangement = Arrangement.SpaceBetween){
+    ) {
+        Row(horizontalArrangement = Arrangement.SpaceBetween) {
             SuggestionChip(
                 enabled = true,
                 onClick = { },
@@ -235,79 +238,34 @@ fun TaskView(navController: NavController){
             )
         }
 
-        ElevatedCard {
-            ListItem(
-                modifier = Modifier.clickable { isShow.value = 1 },
-                headlineText = { Text("高等数学C") },
-                supportingText = { Text("8:45-11:45 | B507 | 李老师") },
-                leadingContent = {
-                    Image(
-                        painterResource(R.mipmap.icon_logo),"LOGO",
-                        Modifier
-                            .size(64.dp)
-                            .clip(RoundedCornerShape(20.dp))
-                    )
-                }
-            )
+        vm.todayToDoLists.forEachIndexed { index, item ->
+            ElevatedCard {
+                ListItem(
+                    modifier = Modifier.clickable { isShow = 1 },
+                    headlineText = { Text(item.title) },
+                    supportingText = { Text("${item.otherinfo} | ${item.classroom} | ${item.teacherName}") },
+                    leadingContent = {
+                        Icon(
+                            item.icons, "LOGO",
+                            Modifier
+                                .size(64.dp)
+                                .clip(RoundedCornerShape(20.dp))
+                        )
+                    }
+                )
+            }
         }
 
-        ElevatedCard {
-            ListItem(
-                modifier = Modifier.clickable {  isShow.value = 1 },
-                headlineText = { Text("高等数学C") },
-                supportingText = { Text("8:45-11:45 | B507 | 李老师") },
-                leadingContent = {
-                    Image(
-                        painterResource(R.mipmap.icon_logo),"LOGO",
-                        Modifier
-                            .size(64.dp)
-                            .clip(RoundedCornerShape(20.dp))
-                    )
-                }
-            )
-        }
+        when (isShow) {
+            1 -> isShow = TaskInformation()
+            2 -> {
+                isShow = 0
+                onNavigateToTaskEdit.invoke()
+            }
 
-        ElevatedCard {
-            ListItem(
-                modifier = Modifier.clickable {  isShow.value = 1 },
-                headlineText = { Text("高等数学C") },
-                supportingText = { Text("8:45-11:45 | B507 | 李老师") },
-                leadingContent = {
-                    Image(
-                        painterResource(R.mipmap.icon_logo),"LOGO",
-                        Modifier
-                            .size(64.dp)
-                            .clip(RoundedCornerShape(20.dp))
-                    )
-                }
-            )
+            else -> {}
         }
-         when(isShow.value){
-             1 -> isShow.value = TaskInformation()
-             2 -> {
-                 isShow.value = 0
-                 navController.navigate("TaskEdit")
-             }
-             else -> {}
-         }
 
     }
 }
 
-@Composable
-fun ViewPrintHome( innerPadding: PaddingValues,navController: NavController) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(20.dp),
-        contentPadding = innerPadding,
-        verticalArrangement = Arrangement.spacedBy(15.dp)
-    ) {
-        item{
-            FunctionView()
-        }
-        item{
-            TaskView(navController)
-        }
-    }
-}

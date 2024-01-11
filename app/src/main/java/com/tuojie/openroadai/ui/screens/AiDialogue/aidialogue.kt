@@ -134,7 +134,7 @@ enum class EmojiStickerSelector {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AiDialogueView(navController: NavController) {
+fun AiDialogueView() {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -142,7 +142,7 @@ fun AiDialogueView(navController: NavController) {
             TopAppBar(
                 title = {  },
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate("home") }) {
+                    IconButton(onClick = { }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Back"

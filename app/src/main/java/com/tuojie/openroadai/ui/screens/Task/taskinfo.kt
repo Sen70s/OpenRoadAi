@@ -75,10 +75,10 @@ import androidx.compose.material3.AlertDialog as AlertDialog1
 @SuppressLint("RememberReturnType")
 @Composable
 fun TaskInformation(): Int{
-    val isOpen = remember { mutableStateOf(1) }
+    var isOpen by remember { mutableStateOf(1) }
     AlertDialog1(
         /*当用户点击对话框以外的地方或者按下系统返回键将会执行的代码*/
-        onDismissRequest = { isOpen.value = 0 },
+        onDismissRequest = { isOpen = 0 },
         title =
         {
             Row (
@@ -87,7 +87,7 @@ fun TaskInformation(): Int{
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Text(text = "高等数学B", style = MaterialTheme.typography.titleLarge)
-                IconButton(onClick = { isOpen.value = 2 }) {
+                IconButton(onClick = { isOpen = 2 }) {
                     Icon(Icons.Default.Edit,"编辑")
                 }
             }
@@ -103,14 +103,14 @@ fun TaskInformation(): Int{
         },
         confirmButton = {
             Button(
-                onClick = { isOpen.value = 0 }
+                onClick = { isOpen = 0 }
             ) {
                 Text("确认")
             }
         },
         dismissButton = {
             OutlinedButton(
-                onClick = { isOpen.value = 0 },
+                onClick = { isOpen = 0 },
                 //colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
             ) {
                 Text("删除")
@@ -118,19 +118,19 @@ fun TaskInformation(): Int{
         }
 
     )
-    return isOpen.value
+    return isOpen
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TaskEditView(navController: NavController){
+fun TaskEditView(){
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("编辑事件", style = MaterialTheme.typography.titleLarge)},
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate("home") }) {
+                    IconButton(onClick = {}) {
                         Icon(Icons.Filled.ArrowBack, "Back")
                     }
                 },
