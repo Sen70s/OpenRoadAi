@@ -213,8 +213,8 @@ fun EditingArea(){
         ) {
             Column {
                 ListItem(
-                    headlineText = { Text("原创内容", fontWeight = FontWeight.Bold) },
-                    supportingText = { Text("声明该内容为本人原创") },
+                    headlineContent = { Text("原创内容", fontWeight = FontWeight.Bold) },
+                    supportingContent = { Text("声明该内容为本人原创") },
                     leadingContent = {
                         Icon( imageVector = Icons.Filled.Info, contentDescription = "GoTo", Modifier.size(32.dp) )
                     },

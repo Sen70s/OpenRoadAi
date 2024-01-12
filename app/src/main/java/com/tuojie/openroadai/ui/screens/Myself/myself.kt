@@ -30,6 +30,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -37,11 +38,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.tuojie.openroadai.viewmodel.MainActivityViewModel
 
 /*Version0.1 MD3*/
 @Composable
@@ -150,9 +154,8 @@ fun UserData(){
 @Composable
 fun MegaMemberData(){
         ElevatedCard(
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 2.dp
-            ), modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
         ) {
             Row (
                 Modifier
@@ -182,11 +185,11 @@ fun MegaMemberData(){
 fun MoreFunctionView(){
     ElevatedCard(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation( defaultElevation = 2.dp )
+        elevation = CardDefaults.cardElevation( defaultElevation = 1.dp )
     ) {
         Column {
             ListItem(
-                headlineText = { Text("对话记录") },
+                headlineContent = { Text("对话记录") },
                 leadingContent = {
                     Icon( imageVector = Icons.Outlined.Message, contentDescription = "FunctionName", Modifier.size(32.dp) )
                 },
@@ -195,7 +198,7 @@ fun MoreFunctionView(){
                 }
             )
             ListItem(
-                headlineText = { Text("小鹿建议") },
+                headlineContent = { Text("小鹿建议") },
                 leadingContent = {
                     Icon( imageVector = Icons.Outlined.Check, contentDescription = "FunctionName", Modifier.size(32.dp) )
                 },
@@ -204,7 +207,7 @@ fun MoreFunctionView(){
                 }
             )
             ListItem(
-                headlineText = { Text("小鹿日程") },
+                headlineContent = { Text("小鹿日程") },
                 leadingContent = {
                     Icon( imageVector = Icons.Outlined.DateRange, contentDescription = "FunctionName", Modifier.size(32.dp) )
                 },
@@ -213,7 +216,7 @@ fun MoreFunctionView(){
                 }
             )
             ListItem(
-                headlineText = { Text("个人信息") },
+                headlineContent = { Text("个人信息") },
                 leadingContent = {
                     Icon( imageVector = Icons.Outlined.AccountCircle, contentDescription = "FunctionName", Modifier.size(32.dp) )
                 },
@@ -222,7 +225,7 @@ fun MoreFunctionView(){
                 }
             )
             ListItem(
-                headlineText = { Text("热门活动") },
+                headlineContent = { Text("热门活动") },
                 leadingContent = {
                     Icon( imageVector = Icons.Outlined.LocalActivity, contentDescription = "FunctionName", Modifier.size(32.dp) )
                 },
@@ -231,7 +234,7 @@ fun MoreFunctionView(){
                 }
             )
             ListItem(
-                headlineText = { Text("新手教程") },
+                headlineContent = { Text("新手教程") },
                 leadingContent = {
                     Icon( imageVector = Icons.Filled.EmojiPeople, contentDescription = "FunctionName", Modifier.size(32.dp) )
                 },

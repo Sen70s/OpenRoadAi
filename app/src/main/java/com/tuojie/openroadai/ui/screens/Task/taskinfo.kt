@@ -186,7 +186,7 @@ fun TaskEditBody(innerPadding: PaddingValues){
         item{
             ListItem(
                 leadingContent = { Icon( Icons.Default.TextFields, "The info of the Task") },
-                headlineText = {
+                headlineContent = {
                     TextField(
                         value = textFieldValue,
                         onValueChange = {
@@ -208,7 +208,7 @@ fun TaskEditBody(innerPadding: PaddingValues){
         item{
             ListItem(
                 leadingContent = { Icon( Icons.Default.Tag, "The Tag of the Task") },
-                headlineText = {
+                headlineContent = {
                     LazyRow (
                         Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(5.dp),
@@ -242,7 +242,7 @@ fun TaskEditBody(innerPadding: PaddingValues){
         item{
             ListItem(
                 leadingContent = { Icon( Icons.Default.DateRange, "The DateRange of the Task") },
-                headlineText = {
+                headlineContent = {
                     Row (
                         Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(5.dp),
@@ -268,7 +268,7 @@ fun TaskEditBody(innerPadding: PaddingValues){
         item{
             ListItem(
                 leadingContent = { Icon( Icons.Default.LocationOn, "The info of the Task") },
-                headlineText = {
+                headlineContent = {
                     TextField(
                         value = textFieldValue,
                         onValueChange = {
@@ -290,7 +290,7 @@ fun TaskEditBody(innerPadding: PaddingValues){
         item{
             ListItem(
                 leadingContent = { Icon( Icons.Default.Person, "The info of the Task") },
-                headlineText = {
+                headlineContent = {
                     TextField(
                         value = textFieldValue,
                         onValueChange = {

@@ -242,8 +242,8 @@ fun TaskView(onNavigateToTaskEdit: () -> Unit = {}, vm: HomeScreenViewModel = vi
             ElevatedCard {
                 ListItem(
                     modifier = Modifier.clickable { isShow = 1 },
-                    headlineText = { Text(item.title) },
-                    supportingText = { Text("${item.otherinfo} | ${item.classroom} | ${item.teacherName}") },
+                    headlineContent = { Text(item.title) },
+                    supportingContent = { Text("${item.otherinfo} | ${item.classroom} | ${item.teacherName}") },
                     leadingContent = {
                         Icon(
                             item.icons, "LOGO",

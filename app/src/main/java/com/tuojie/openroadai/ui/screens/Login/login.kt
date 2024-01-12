@@ -2,7 +2,6 @@
 
 package com.tuojie.openroadai.ui.screens.Login
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -43,17 +42,17 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.tuojie.openroada.getUserInformation
 import com.tuojie.openroadai.R
+import com.tuojie.openroadai.compositionLocal.LocalMainActivityViewModel
 
 @Composable
-fun LoginView(navController: NavController) {
+fun LoginView(onClose: () -> Unit) {
     var text by remember {mutableStateOf("")}
     var accounttext by remember{ mutableStateOf("")}
     var passwordtext by remember{mutableStateOf("")}
     var passwordHidden by remember{ mutableStateOf(false)}
 
+    val mainVM = LocalMainActivityViewModel.current
 
     LazyColumn(
         Modifier
@@ -174,19 +173,11 @@ fun LoginView(navController: NavController) {
                             Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.End
                         ){
-                            var testtext by remember { mutableStateOf("") }
-                            Text(text = testtext)
                             FloatingActionButton(
                                 onClick = {
-                                    /*if(accounttext != ""){
-                                        var userID: Int = Integer.parseInt(accounttext)
-                                        val isAllowLogin = getUserInformation(userID)
-                                        Log.d("-----7",isAllowLogin.toString())
-                                        if(isAllowLogin){
-                                            navController.navigate("home")
-                                        }
-                                    }*/
-                                },
+                                    mainVM.login()
+                                    onClose.invoke()
+                                          },
                                 containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
                                 elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
                             ) {
